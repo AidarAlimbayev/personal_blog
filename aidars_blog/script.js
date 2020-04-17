@@ -40,6 +40,11 @@ jQuery(document).ready(function() {
         // }).then(
         //   message => alert(message)
         // );
+
+        //emailjs.send('gmail', 'base', templateParams)
+
+
+
         if(success) {
             jQuery(".info_msg").text("Your message was sent successfully")
             jQuery(".info_msg").css('color','green')
@@ -49,6 +54,19 @@ jQuery(document).ready(function() {
             jQuery(".info_msg").css('color','red')
         }
     })
+
+
+    jQuery(".cookie_ok").on("click", function(event) {
+        event.preventDefault()      
+        localStorage.setItem("cookie_ok", true)
+        jQuery(".cookies_alert").hide()
+    })
+
+    if(!localStorage.getItem("cookie_ok")) {
+        jQuery(".cookies_alert").show()
+    }
+
+
 
 })
 
