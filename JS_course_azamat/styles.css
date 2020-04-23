@@ -3,16 +3,6 @@
 *::before {
     box-sizing:border-box;
 }
-/*
-#start_game {
-    display: none
-}
-*/
-.hide {
-    display: none !important;
-
-}
-
 body{
     height: 100vh;
     width: 100vw;
@@ -84,14 +74,12 @@ body{
     background-color: #000;
     border-radius: 50%;
 }
+
 .o::after{
     width: 50px;
     height: 50px;
     background-color: #fff;
 }
-
-
-
 
 .cell:hover {
     cursor: pointer;
@@ -110,10 +98,10 @@ body{
     background-color: lightgray;
     position: absolute;
 }
-.x_turn .cell:hover::before {
+.x_turn .cell:not(.x):not(.o):hover::before{
     transform: rotate(45deg);
 }
-.x_turn .cell:hover:after {
+.x_turn .cell:not(.x):not(.o):hover::after{
     transform: rotate(-45deg);
 }
 
@@ -157,11 +145,11 @@ body{
 }
 
 #start_game a.x {
-    left: 50 px;
+    left: 100px;
 }
 
 #start_game a.o{
-    left: -50px;
+    left: -100px;
 }
 
 .end_game {

@@ -2,11 +2,13 @@ let startButtons = document.querySelectorAll('[data-start-button]')
 
 let player 
 let turn
-let endGame
+let endGame = false
 let startGameElement = document.getElementById('start_game')
 let board = document.querySelector('.board')
 let cells = document.querySelectorAll('.cell')
-let endGameElement
+let endGameElement = document.querySelector('.end_game')
+let restartButton = document.querySelector('.restart_game')
+let endGameMessage = document.querySelector('.end_game_message')
 let WinComb = [
     [0,1,2],
     [3,4,5],
@@ -44,12 +46,28 @@ cells.forEach(function(cell){
 })
 
 function handleClick(e) {
-    e.target.classList.add(player)
-    swapTurns()
-    if(end_game){
+    this.classList.add(player)
+    let isDraw
+    if(checkWin(player)){
+        isDraw = false
+        console.log('win')
+        endGameFunc(player, isDraw)
+    } else if (checkDraw()){
+        isDraw = true
+        endGameFunc(player)
+    } else {
+        swapTurns()
+    }
+        
+    if(endGame){
         endGameElement.classList.remove('hide')
+        endGameMessage.innerText = `$(player) Won`
     }
     //console.log(checkWin)
+}
+
+function endGamefunc(endGame) {
+    endGameElement.classList.
 }
 
 function swapTurns() { 
@@ -73,7 +91,56 @@ function restartGame(e) {
     board.classList.add('hide')
     endGameElement.classList.add('hide')
     startGameElement.classList.remove('hide')
+
+    cells.forEach(function(cell)) {
+        cell.classList.remove('o')
+        cell.classList.remove('x')
+    }
 }
+
+
+function checkWin(player) {
+    WinComb.forEach(function(comb){
+        let check = 0
+        comb.forEach(function(index) {
+            let c = cells[index].classList.contains(player)
+            if(c == true){
+                check++
+            }
+        })
+        if (check == 3){
+            endGame = true
+            return true
+        }
+    })
+
+    if(!endgame){
+        return false
+    } else {
+        return true
+    }
+
+    
+}
+
+function checkDraw() {
+    cells.forEach(function(cell){
+        let has0 = cell.classList.contains('o')
+        let hasX = cell.classList.contains('x')
+
+        if (has0 || hasX) {
+            check++
+        }
+    })
+    if (check == 9) {
+        endGame = true
+        return true
+    }
+    retrun true
+}
+
+
+
 
 // function checkWin(currentClass) {
 //    let res =  WinComb.some(combination => {
