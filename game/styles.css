@@ -10,6 +10,7 @@ body{
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    font-family: 'Bangers', cursive;
 }
 
 .board {
@@ -90,24 +91,24 @@ body{
 }
 
 
-.x_turn .cell:not(.x):not(.o):hover::before,
-.x_turn .cell:not(.x):not(.o):hover::after {
+.x_turn.cell:not(.x):not(.o):hover::before,
+.x_turn.cell:not(.x):not(.o):hover::after {
     content: '';
     width: calc(140px * 0.15);
     height: 90px;
     background-color: lightgray;
     position: absolute;
 }
-.x_turn .cell:not(.x):not(.o):hover::before{
+.x_turn.cell:not(.x):not(.o):hover::before{
     transform: rotate(45deg);
 }
-.x_turn .cell:not(.x):not(.o):hover::after{
+.x_turn.cell:not(.x):not(.o):hover::after{
     transform: rotate(-45deg);
 }
 
 
-.o_turn .cell:not(.x):not(.o):hover::before,
-.o_turn .cell:not(.x):not(.o):hover::after {
+.o_turn.cell:not(.x):not(.o):hover::before,
+.o_turn.cell:not(.x):not(.o):hover::after {
     content: '';
     width: 85px;
     height: 85px;
@@ -115,10 +116,10 @@ body{
     background-color: lightgray;
     border-radius: 50%;
 }
-.o_turn .cell:not(.x):not(.o):hover::after {
+.o_turn.cell:not(.x):not(.o):hover::after {
     width: 50px !important;
     height: 50px !important;
-    background-color: #fff !important;
+    background-color: #ff5733 !important;
 
 }
 .hide {
@@ -129,7 +130,8 @@ body{
     font-size: 24px;
     border: 1px solid #000;
     padding: 15px;
-    padding-bottom: 115px;    
+    padding-bottom: 115px;
+    background-color: #ff5733;    
 }
 
 #start_game a {

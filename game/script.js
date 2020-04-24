@@ -1,5 +1,4 @@
 let startButtons = document.querySelectorAll('[data-start-button]')
-
 let player 
 let turn
 let endGame = false
@@ -23,15 +22,16 @@ let WinComb = [
 
 startButtons.forEach(function(button){
     button.addEventListener('click', startGame)
-    console.log(button)
 })
 
 function startGame(event) { //start game function after press button
     event.preventDefault()
     if (this.className == "x"){ //player choose
         player = "x"   
+        turn = "x_turn"
     } else {
         player = "o"
+        turn = "o_turn"
     }
     console.log("This player is - ")
     console.log(player)
@@ -39,13 +39,16 @@ function startGame(event) { //start game function after press button
     startGameElement.classList.add('hide')
     board.classList.remove('hide')
     board.classList.add(turn)
+
+    cells.forEach(function(cell){
+        cell.addEventListener('click', handleClick)
+    })
 }
 
-cells.forEach(function(cell){
-    cell.addEventListener('click', handleClick)
-})
+
 
 function handleClick(e) {
+    e.preventDefault()
     this.classList.add(player)
     let isDraw
     if(checkWin(player)){
@@ -54,21 +57,27 @@ function handleClick(e) {
         endGameFunc(player, isDraw)
     } else if (checkDraw()){
         isDraw = true
-        endGameFunc(player)
+        endGameFunc(player, isDraw)
     } else {
         swapTurns()
     }
-        
-    if(endGame){
-        endGameElement.classList.remove('hide')
-        endGameMessage.innerText = `$(player) Won`
-    }
-    //console.log(checkWin)
 }
 
-function endGamefunc(endGame) {
-    endGameElement.classList.
-}
+function endGameFunc(player, isDraw) {
+    endGameElement.classList.remove('hide')
+    if(isDraw) {
+       endGameMessage.innerText = 'It is a Draw'
+    } else {
+       endGameMessage.innerText = `${player.toUpperCase()} is Won`
+    }
+ 
+    cells.forEach(function(cell) {
+       cell.removeEventListener('click', handleClick)
+    })
+ 
+    board.classList.remove("x_turn")
+    board.classList.remove("o_turn")
+ }
 
 function swapTurns() { 
     if(player == 'x') {
@@ -91,13 +100,28 @@ function restartGame(e) {
     board.classList.add('hide')
     endGameElement.classList.add('hide')
     startGameElement.classList.remove('hide')
-
-    cells.forEach(function(cell)) {
+    endGame = false
+    cells.forEach(function(cell) {
         cell.classList.remove('o')
         cell.classList.remove('x')
-    }
+    })
 }
 
+function endGameFunc(player, isDraw) {
+    endGameElement.classList.remove('hide')
+    if(isDraw) {
+       endGameMessage.innerText = 'It is a Draw'
+    } else {
+       endGameMessage.innerText = `${player.toUpperCase()} is Won`
+    }
+ 
+    cells.forEach(function(cell) {
+       cell.removeEventListener('click', handleClick)
+    })
+ 
+    board.classList.remove("x_turn")
+    board.classList.remove("o_turn")
+ }
 
 function checkWin(player) {
     WinComb.forEach(function(comb){
@@ -110,34 +134,32 @@ function checkWin(player) {
         })
         if (check == 3){
             endGame = true
-            return true
         }
     })
-
-    if(!endgame){
+    if(endgame){
         return false
     } else {
         return true
-    }
-
-    
+    } 
 }
 
 function checkDraw() {
-    cells.forEach(function(cell){
-        let has0 = cell.classList.contains('o')
-        let hasX = cell.classList.contains('x')
-
-        if (has0 || hasX) {
-            check++
-        }
+    let check = 0
+    cells.forEach(function(cell) {
+       let hasO = cell.classList.contains('o')
+       let hasX = cell.classList.contains('x')
+       if(hasO || hasX) {
+          check++
+       }
     })
-    if (check == 9) {
-        endGame = true
-        return true
+    if(check == 9) {
+       endGame = true
+       return true
+    } else {
+       return false
     }
-    retrun true
-}
+    
+ }
 
 
 
